@@ -19,13 +19,15 @@ public class GenerateAst {
                 "Literal  : Object value",
                 "Unary    : Token operator, Expr right"
         ));
+        System.out.println("Done");
     }
 
     private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
-        String path = outputDir + "/" + baseName + ".java";
+        String path = outputDir + "/" + baseName + ".java"; // path = D:\documents\leerplek\java\jlox\src\interpreter
+//        path =  System.getProperty("user.dir") +  "/" + baseName + ".java";
         PrintWriter writer = new PrintWriter(path, "UTF-8");
 
-        writer.println("package generated;");
+        writer.println("package interpreter;");
         writer.println();
         writer.println("import java.util.List;");
         writer.println();
