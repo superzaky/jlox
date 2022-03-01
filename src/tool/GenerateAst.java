@@ -11,6 +11,7 @@ public class GenerateAst {
             System.err.println("Usage: generate_ast <output directory>");
             System.exit(64);
         }
+        // Example usage: args[0] = D:\documents\leerplek\java\jlox\src\interpreter
         String outputDir = args[0];
 //        Probably "Ast" means abstract syntax tree (AST)
         defineAst(outputDir, "Expr", Arrays.asList(
@@ -18,6 +19,11 @@ public class GenerateAst {
                 "Grouping : Expr expression",
                 "Literal  : Object value",
                 "Unary    : Token operator, Expr right"
+        ));
+
+        defineAst(outputDir, "Stmt", Arrays.asList(
+                "Expression : Expr expression",
+                "Print      : Expr expression"
         ));
         System.out.println("Done");
     }

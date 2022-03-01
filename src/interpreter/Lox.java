@@ -17,6 +17,7 @@ public class Lox {
             System.out.println("Usage: jlox [script]");
             System.exit(64);
         } else if (args.length == 1) {
+            //example: args[0] = D:\documents\leerplek\java\jlox\test.txt
             runFile(args[0]);
         } else {
             runPrompt();
@@ -48,7 +49,7 @@ public class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
         if (hadError)
@@ -57,7 +58,7 @@ public class Lox {
             System.exit(70);
 
 //        System.out.println(new AstPrinter().print(expression));
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
 
         // For now, just print the tokens.
 //        for (Token token : tokens) {

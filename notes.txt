@@ -18,3 +18,13 @@ A parser really has two jobs:
     1.Given a valid sequence of tokens, produce a corresponding syntax tree.
 
     2.Given an invalid sequence of tokens, detect any errors and tell the user about their mistakes.
+
+
+New syntax and new grammar rules regarding statements:
+program        → statement* EOF ;
+
+statement      → exprStmt
+               | printStmt ;
+
+exprStmt       → expression ";" ;
+printStmt      → "print" expression ";" ;
