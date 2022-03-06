@@ -3,6 +3,8 @@ package interpreter;
 import java.util.List;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
+    // We store it as a field directly in Interpreter so that the variables stay in memory as long as the interpreter is still running.
+    private Environment environment = new Environment();
     void interpret(List<Stmt> statements) {
         try {
             for (Stmt statement : statements) {
@@ -93,6 +95,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return null;
     }
 
+    // We evaluate a variable expression here.
+    @Override
+    public Object visitVariableExpr(Expr.Variable expr) {
+        return environment.get(expr.name);
+    }
+
     private void checkNumberOperand(Token operator, Object operand) {
         if (operand instanceof Double)
             return;
@@ -148,6 +156,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object value = evaluate(stmt.expression);
         System.out.println(stringify(value));
+        return null;
+    }
+
+    //Visit method for declaration statements
+    @Override
+    public Void visitVarStmt(Stmt.Var stmt) {
+        Object value = null;
+        if (stmt.initializer != null) {
+            value = evaluate(stmt.initializer);
+        }
+
+        environment.define(stmt.name.lexeme, value);
         return null;
     }
 }

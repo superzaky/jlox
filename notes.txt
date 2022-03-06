@@ -28,3 +28,29 @@ statement      → exprStmt
 
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
+
+
+Rule for kinds of statements that declare names:
+program        → declaration* EOF ;
+
+declaration    → varDecl
+               | statement ;
+
+statement      → exprStmt
+               | printStmt ;
+
+The rule for declaring a variable looks like:
+varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
+
+To access a variable, we define a new kind of primary expression:
+primary        → "true" | "false" | "nil"
+               | NUMBER | STRING
+               | "(" expression ")"
+               | IDENTIFIER ;
+
+That IDENTIFIER clause matches a single identifier token, which is understood to be the name of the variable being accessed.
+
+Interesting:
+The problem is that using a variable isn’t the same as referring to it. You can refer to a variable in a chunk of code without immediately
+evaluating it if that chunk of code is wrapped inside a function.
+
