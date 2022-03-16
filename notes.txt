@@ -54,3 +54,17 @@ Interesting:
 The problem is that using a variable isn’t the same as referring to it. You can refer to a variable in a chunk of code without immediately
 evaluating it if that chunk of code is wrapped inside a function.
 
+
+ASSIGNMENT SYNTAX:
+expression     → assignment ;
+assignment     → IDENTIFIER "=" assignment
+               | equality ;
+
+
+Block syntax and semantics:
+statement      → exprStmt
+               | printStmt
+               | block ;
+
+block          → "{" declaration* "}" ;
+
