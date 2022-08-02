@@ -68,3 +68,49 @@ statement      → exprStmt
 
 block          → "{" declaration* "}" ;
 
+IF STATEMENT SYNTAX:
+statement      → exprStmt
+               | ifStmt
+               | printStmt
+               | block ;
+
+ifStmt         → "if" "(" expression ")" statement
+               ( "else" statement )? ;
+
+
+LOGICAL OPERATORS
+expression     → assignment ;
+assignment     → IDENTIFIER "=" assignment
+               | logic_or ;
+logic_or       → logic_and ( "or" logic_and )* ;
+logic_and      → equality ( "and" equality )* ;
+
+
+WHILE LOOPS
+statement      → exprStmt
+               | ifStmt
+               | printStmt
+               | whileStmt
+               | block ;
+
+whileStmt      → "while" "(" expression ")" statement ;
+
+We’re down to the last control flow construct, Ye Olde C-style for loop. I probably don’t need to remind you, but it looks like this:
+for (var i = 0; i < 10; i = i + 1) print i;
+
+In grammarese, that’s:
+
+statement      → exprStmt
+               | forStmt
+               | ifStmt
+               | printStmt
+               | whileStmt
+               | block ;
+
+forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
+                 expression? ";"
+                 expression? ")" statement ;
+
+
+
+
