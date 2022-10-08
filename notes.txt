@@ -111,6 +111,28 @@ forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
                  expression? ";"
                  expression? ")" statement ;
 
+the unary rule bubble up to a new call rule:
+unary          → ( "!" | "-" ) unary | call ;
+call           → primary ( "(" arguments? ")" )* ;
+
+The argument list grammar is:
+arguments      → expression ( "," expression )* ;
+
+
+declaration    → funDecl
+               | varDecl
+               | statement ;
+
+The updated declaration rule references this new rule:
+funDecl        → "fun" function ;
+function       → IDENTIFIER "(" parameters? ")" block ;
+
+The function itself is a name followed by the parenthesized parameter list and the body. The body is always a braced
+block, using the same grammar rule that block statements use. The parameter list uses this rule:
+parameters     → IDENTIFIER ( "," IDENTIFIER )* ;
+
+
+
 
 
 
