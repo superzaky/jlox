@@ -132,6 +132,16 @@ block, using the same grammar rule that block statements use. The parameter list
 parameters     → IDENTIFIER ( "," IDENTIFIER )* ;
 
 
+Grammar for return statements:
+statement      → exprStmt
+               | forStmt
+               | ifStmt
+               | printStmt
+               | returnStmt
+               | whileStmt
+               | block ;
+
+returnStmt     → "return" expression? ";" ;
 
 
 
