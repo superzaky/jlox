@@ -1,3 +1,16 @@
+INTELLIJ
+lox config:
+main class: interpreter.Lox
+program arguments: D:\documents\leerplek\java\jlox\test.txt
+
+astprinter config:
+main class: interpreter.AstPrinter
+
+GenerateAst config:
+main class: GenerateAst
+program arguments: D:\documents\leerplek\java\jlox\src\interpreter
+
+
 Regarding AstPrinter.java:
 
 expression     → literal
