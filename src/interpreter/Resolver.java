@@ -8,9 +8,15 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     private final Interpreter interpreter;
     // The scope stack is only used for local block scopes.
     private final Stack<Map<String, Boolean>> scopes = new Stack<>();
+    private FunctionType currentFunction = FunctionType.NONE;
 
     Resolver(Interpreter interpreter) {
         this.interpreter = interpreter;
+    }
+    
+    private enum FunctionType {
+      NONE,
+      FUNCTION
     }
 
     @Override
@@ -32,7 +38,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
       declare(stmt.name);
       define(stmt.name);
   
-      resolveFunction(stmt);
+      resolveFunction(stmt, FunctionType.FUNCTION);
       return null;
     }
 
@@ -52,6 +58,9 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitReturnStmt(Stmt.Return stmt) {
+      if (currentFunction == FunctionType.NONE) {
+        Lox.error(stmt.keyword, "Can't return from top-level code.");
+      }
       if (stmt.value != null) {
         resolve(stmt.value);
       }
@@ -160,14 +169,18 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         expr.accept(this);
     }
 
-    private void resolveFunction(Stmt.Function function) {
-        beginScope();
-        for (Token param : function.params) {
-          declare(param);
-          define(param);
-        }
-        resolve(function.body);
-        endScope();
+    private void resolveFunction(
+        Stmt.Function function, FunctionType type) {
+      FunctionType enclosingFunction = currentFunction;
+      currentFunction = type;
+      beginScope();
+      for (Token param : function.params) {
+        declare(param);
+        define(param);
+      }
+      resolve(function.body);
+      endScope();
+      currentFunction = enclosingFunction;
     }
 
     private void beginScope() {

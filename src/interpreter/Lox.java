@@ -52,8 +52,7 @@ public class Lox {
         List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
-        if (hadError)
-            System.exit(65);
+        if (hadError) return;
         if (hadRuntimeError)
             System.exit(70);
 
