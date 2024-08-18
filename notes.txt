@@ -10,6 +10,18 @@ GenerateAst config:
 main class: GenerateAst
 program arguments: D:\documents\leerplek\java\jlox\src\interpreter
 
+VSCODE
+in launch.json you need to some have something like this:
+{
+    "type": "java",
+    "name": "GenerateAst",
+    "request": "launch",
+    "mainClass": "GenerateAst",
+    "projectName": "jlox_58e57d61",
+    "args": [
+        "D:\\documents\\leerplek\\java\\jlox\\src\\interpreter"
+    ],
+},
 
 Regarding AstPrinter.java:
 
@@ -156,6 +168,11 @@ statement      → exprStmt
 
 returnStmt     → "return" expression? ";" ;
 
+The new classDecl rule relies on the function rule we defined earlier: 
+declaration    → classDecl
+               | funDecl
+               | varDecl
+               | statement ;
 
-
+classDecl      → "class" IDENTIFIER "{" function* "}" ;
 

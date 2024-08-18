@@ -77,3 +77,8 @@ var a = "global";
   var a = "block";
   showA();
 }
+
+class Bagel {}
+var bagel = Bagel();
+print bagel; // Prints "Bagel instance".
+
