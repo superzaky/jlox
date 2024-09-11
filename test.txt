@@ -82,3 +82,10 @@ class Bagel {}
 var bagel = Bagel();
 print bagel; // Prints "Bagel instance".
 
+class Beef {
+  eat() {
+    print "Crunch crunch crunch!";
+  }
+}
+
+Beef().eat(); // Prints "Crunch crunch crunch!".

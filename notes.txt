@@ -105,7 +105,7 @@ ifStmt         → "if" "(" expression ")" statement
 
 LOGICAL OPERATORS
 expression     → assignment ;
-assignment     → IDENTIFIER "=" assignment
+assignment     → ( call "." )? IDENTIFIER "=" assignment
                | logic_or ;
 logic_or       → logic_and ( "or" logic_and )* ;
 logic_and      → equality ( "and" equality )* ;
@@ -138,7 +138,7 @@ forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
 
 the unary rule bubble up to a new call rule:
 unary          → ( "!" | "-" ) unary | call ;
-call           → primary ( "(" arguments? ")" )* ;
+call           → primary ( "(" arguments? ")" | "." IDENTIFIER )* ;
 
 The argument list grammar is:
 arguments      → expression ( "," expression )* ;
