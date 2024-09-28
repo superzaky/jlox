@@ -11,10 +11,16 @@ class LoxFunction implements LoxCallable {
         this.declaration = declaration;
     }
 
-    // This handful of lines of code is one of the most fundamental, powerful pieces of our interpreter
+    LoxFunction bind(LoxInstance instance) {
+        Environment environment = new Environment(closure);
+        environment.define("this", instance);
+        return new LoxFunction(declaration, environment);
+    }
+
+    // This handful of lines of code is one of the most fundamental, powerful pieces
+    // of our interpreter
     @Override
-    public Object call(Interpreter interpreter,
-                       List<Object> arguments) {
+    public Object call(Interpreter interpreter, List<Object> arguments) {
         Environment environment = new Environment(closure);
         for (int i = 0; i < declaration.params.size(); i++) {
             environment.define(declaration.params.get(i).lexeme,
